@@ -64,12 +64,28 @@ $hotels = [
 
   <main>
 
-    <form action="./filter_parking.php" method="GET" class="mb-3">
-      <button type="submit" class="btn btn-primary">FILTRA GLI HOTEL CHE HANNO UN PARCHEGGIO</button>
-    </form>
+    <form action="" method="GET">
+      <div class="mb-3">
+        <select name="parcheggio">
+          <option value="0">Tutte le strutture</option>
+          <option value="yes">Solo strutture con parcheggio</option>
+          <option value="no">Solo strutture senza parcheggio</option>
+        </select>
 
-    <form action="./filter_vote.php" method="GET" class="mb-3">
-      <button type="submit" class="btn btn-primary">FILTRA GLI HOTEL CHE HANNO UN VOTO SUPERIORE A 2</button>
+      </div>
+
+      <div class="mb-3">
+        <select name="valutazione" id="">
+          <option value="0">Qualsiasi valutazione</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+
+      <button>SUBMIT</button>
     </form>
 
     <table class="table">
@@ -85,19 +101,26 @@ $hotels = [
       <tbody>
         <tr>
           <?php
+          $parcheggio = isset($_GET['parcheggio']) ? $_GET['parcheggio'] : 0;
+          $valutazione = isset($_GET['valutazione']) ? $_GET['valutazione'] : 0;
           foreach ($hotels as $hotel) {
-            if ($hotel['parking'] == true) {
-              $parking_available = 'yes';
-            } else {
-              $parking_available = 'no';
+            if (intval($valutazione) <= $hotel['vote'] || $valutazione == 0) {
+
+              if (($parcheggio == 'yes' && $hotel['parking']) || ($parcheggio == 'no' && !$hotel['parking']) || $parcheggio == 0) {
+                if ($hotel['parking'] == true) {
+                  $parking_available = 'yes';
+                } else {
+                  $parking_available = 'no';
+                }
+                echo
+                  "<td>$hotel[name]</td>
+                <td>$hotel[description]</td>
+                <td>$parking_available</td>
+                <td>$hotel[vote]</td>
+                <td>$hotel[distance_to_center]</td>
+                </tr>";
+              }
             }
-            echo
-              "<td>$hotel[name]</td>
-            <td>$hotel[description]</td>
-            <td>$parking_available</td>
-            <td>$hotel[vote]</td>
-            <td>$hotel[distance_to_center]</td>
-            </tr>";
           }
           ;
           ?>
