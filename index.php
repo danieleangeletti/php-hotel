@@ -63,6 +63,15 @@ $hotels = [
   </header>
 
   <main>
+
+    <form action="./filter_parking.php" method="GET" class="mb-3">
+      <button type="submit" class="btn btn-primary">FILTRA GLI HOTEL CHE HANNO UN PARCHEGGIO</button>
+    </form>
+
+    <form action="./filter_vote.php" method="GET" class="mb-3">
+      <button type="submit" class="btn btn-primary">FILTRA GLI HOTEL CHE HANNO UN VOTO SUPERIORE A 2</button>
+    </form>
+
     <table class="table">
       <thead>
         <tr>
